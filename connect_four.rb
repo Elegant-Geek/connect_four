@@ -30,7 +30,7 @@ class Game
     end
   end
 
-  def set_player_names
+  def set_player_names()
     2.times do |i|
       loop do
         puts "Player #{i+1}, what is your name?"
@@ -171,7 +171,7 @@ class Game
   end
 
   def play_game()
-    puts "Welcome to Tic-Tac-Toe!"
+    puts "Welcome to Connect Four!"
     set_player_names()
     print_array()
     game_turn()
@@ -191,12 +191,11 @@ class Player
   end
 end
 
-#driver code
-# create defaults (comment these out these are test players)
-# Player.new("Player 1", "X")
-# Player.new("Player 2", "O")
-o = Game.new()
-o.play_game()
 
-# test a game with values of (1 2 3 4 5 7 6 8 9) consecutively and also try 159 for a winning combo and 1579 for the filtering system. 
-# make sure a cats game works
+# have this run only if instructed to within this file otherwise when you run rspec, it searches the whole rspec doc for input.
+if __FILE__== $0
+  o = Game.new()
+  o.play_game()
+end
+
+
