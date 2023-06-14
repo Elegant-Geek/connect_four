@@ -1,4 +1,5 @@
 # 8:48pm on 6.13.23 is start of this project connect four
+require_relative './test_big_arrays.rb'
 class Game
   attr_reader :board, :players
   # create a list of winning combos in the array

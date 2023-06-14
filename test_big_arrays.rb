@@ -65,9 +65,11 @@ diagonal_winners = [["C1R3", "C2R4", "C3R5", "C4R6"],
                     end
                     # p diagonal_winners
 
-# total size is 69 combos
-p WINNERS
-puts WINNERS.size
+if __FILE__== $0
+  # total size is 69 combos (show all the winners only if this file is run)
+  p WINNERS
+  puts WINNERS.size
+end
 
 
 
