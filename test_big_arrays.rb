@@ -60,10 +60,15 @@ diagonal_winners = [["C1R3", "C2R4", "C3R5", "C4R6"],
                     ["C2R4", "C3R3", "C4R2", "C5R1"],
                     ["C1R4", "C2R3", "C3R2", "C4R1"]]
 # put every single combo into the WINNERS array
-                   diagonal_winners.each do |w|
-                      WINNERS << w
-                    end
+                  
+                      WINNERS << diagonal_winners
+                   
                     # p diagonal_winners
+# last step is to flatten the array so that all three sub-arrays fade away:
+# BEFORE FLATTEN, WINNERS IS [[across_winners], [down_winners], [diagonal_winners]]
+# AFTER FLATTEN, WINNERS IS [across_winners, down_winners, diagonal_winners]
+
+WINNERS.flatten!(1)
 
 if __FILE__== $0
   # total size is 69 combos (show all the winners only if this file is run)

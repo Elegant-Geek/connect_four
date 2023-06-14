@@ -2,17 +2,7 @@
 require_relative './test_big_arrays.rb'
 class Game
   attr_reader :board, :players
-  # create a list of winning combos in the array
-  WINNING_COMBOS = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [1, 4, 7],
-    [2, 5, 8],
-    [3, 6, 9],
-    [3, 5, 7],
-    [1, 5, 9]
-  ]
+  # NOTE: the winning combo array is hosted in another file for brevity.
   def initialize(game_name = "Connect Four")
     @players = []
     reset()
@@ -108,10 +98,7 @@ class Game
         # array[array.index(4)] = "Z"
       @board[@board.index(selection)] = p.character
       p.combo_array << selection
-      # sort the combo array, delete duplicate entries, then overwrite it!
-      p.combo_array = p.combo_array.sort.uniq
-      puts p.combo_array
-      # p p.combo_array
+      p p.combo_array
       # this line (below) must be here so that the board display gets updated every time the board changes. The map to_s includes quotes so board maintains shape throughout the game.
       # @board_display = @board.map(&:to_s)
       print_array()
@@ -127,13 +114,18 @@ class Game
       end
       # ^ loop small end
             # match combo array to any winning combo using iteration through every winning combo
-            WINNING_COMBOS.each do |n|
+            WINNERS.each do |n|
               # the "and" sign catches the intersecting values of each instance of the winning combos constant and matches it to the current player's combo array.
               @intersection = n & p.combo_array
-              # p.combo_array
-              # p @intersection
+              if (@intersection.size > 2)
+                puts "PRINT AUGH#{p.combo_array}"
+                puts "PRINT AUGH#{@intersection}"
+              end
               # if any winner at all, then report winner and break game. It doesn't matter if board is full or not. The board is checked for fullness later on.
-              if  @intersection == n
+              # puts "printing intersection #{@intersection}"
+              # puts "printing n #{n}"
+              # .... the answer was right in front of me. screw matching, as soon as the intersection is size of four, that is a win.
+              if (@intersection.size == 4)
                 puts "PLAYER #{p.name} (#{p.character}), WINS THE GAME WITH POSITIONS #{@intersection}!"
                 @gameover = true
                 break
