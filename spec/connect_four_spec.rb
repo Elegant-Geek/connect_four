@@ -1,42 +1,46 @@
-require 'stringio'
+# require 'stringio'
 require_relative '../connect_four.rb'
 require_relative '../test_big_arrays.rb'
 
-def capture_name
-  $stdin.gets.chomp
-end
+# def capture_name
+#   $stdin.gets.chomp
+# end
 
 describe Game do
-  # subject(:test_game) { Game.new() }
+  subject(:test_game) { Game.new() }
 
     # this is basially doing set_player_names() minus cmd line input 
     # subject(:p1) { Player.new("Player One", " \u25CF  ") }
     # subject(:p2) { Player.new("Player Two", " \u25CB  ") }
-    describe 'capture_name' do
-      before do
-        $stdin = StringIO.new("Player One")
-      end
+    # describe 'capture_name' do
+    #   before do
+    #     $stdin = StringIO.new("Player One")
+    #   end
     
-      after do
-        $stdin = STDIN
-      end
+    #   after do
+    #     $stdin = STDIN
+    #   end
     
-      it "should be 'James T. Kirk'" do    
-        expect(capture_name).to be == "Player One"
-      end
+    #   it "should be 'Player One'" do    
+    #     expect(capture_name).to be == "Player One"
+    #   end
+    # end
+
+    describe 'store players' do
+    before do
+      # TIP! If you need to allow multiple gets in the loop, (example: the method set_player_names requires four consecutive inputs), you list them consecutively: ('Player One', 'Y', 'Player Two', 'Y') 
+      allow(subject).to receive(:gets).and_return('One', 'Y', 'Two', 'Y')
+      subject.set_player_names()
     end
-    # test_game.set_player_names()
-    # $stdin = StringIO.new("Player One")
-    # $stdin = StringIO.new("Y")
-    # $stdin = StringIO.new("Player Two")
-    # $stdin = StringIO.new("Y")
 
+    it "first player should be 'One'" do    
+      expect(test_game.players[0].name).to be == "One"
+    end
 
-  # context 'when testing the before setup players above' do
-  #   it 'will have @player.size of 2' do
-  #     expect(test_game.players.size).to eq(2)
-  #   end
-  # end
+    it "second player should be 'Two'" do    
+      expect(test_game.players[1].name).to be == "Two"
+    end
+  end
 
 end
 

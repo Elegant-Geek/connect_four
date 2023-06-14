@@ -1,5 +1,7 @@
 # 8:48pm on 6.13.23 is start of this project connect four
 # ended main code at 4:04am, so now all I gotta do is write the tests for it! Yay!
+# require 'stringio'
+
 require_relative './test_big_arrays.rb'
 class Game
   attr_reader :board, :players
@@ -51,7 +53,7 @@ class Game
             else 
               puts "something is wrong"
             end
-            puts "Player #{name} saved."
+            puts "Player '#{name}' saved."
             #break loop only if name is valid
             break
           elsif (confirm_name == "N")
