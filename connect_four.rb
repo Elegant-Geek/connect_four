@@ -39,12 +39,7 @@ class Game
         end
   end
   def print_array()
-    # p @board[0..6].join(', ')
-    # p @board[7..13].join(', ')
-    # p @board[14..20].join(', ')
-    # p @board[21..27].join(', ')
-    # p @board[28..34].join(', ')
-    # p @board[35..41].join(', ')
+    # creates a great display array without all the extra quotes
     (6).times do |n|
       p @board[(7 * n)..(7 * n + 6)].join(', ')
     end
@@ -94,7 +89,7 @@ class Game
   end
   def game_turn
     while @gameover == false do
-    puts "Starting new round:"
+    # puts "Starting new round:"
     @players.each do |p|
     loop do
       # puts "#{p.name} playing as #{p.character}!"
