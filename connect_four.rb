@@ -5,6 +5,7 @@
 require_relative './test_big_arrays.rb'
 class Game
   attr_reader :board, :players
+  attr_accessor :gameover
   # NOTE: the winning combo array is hosted in another file for brevity.
   def initialize(game_name = "Connect Four")
     @players = []
@@ -96,7 +97,11 @@ class Game
       # next next step is to prohibit hovering chips and must have sunken chip below like C1R4 cant be filled til C1R3 is filled. so if C1R4 is called but C1R(4-1) spot exists in array, ERROR for hovering chip 
       # if the board includes the C1R4 description and the spot below is already filled (ie, excludes C1R3) then it is a valid entry!
       # this takes care of all of row one as well because if spot is C1R1, the array will never have C1R0 which will always return false.
-      if (@board.include?(selection)) && !(@board.include?(spot_beneath_selection))
+      if selection == "QUIT"
+        puts "bye"
+        @gameover = true
+        break
+    elsif (@board.include?(selection)) && !(@board.include?(spot_beneath_selection))
         # NEXT STEP IS BELOW: line 117 add the replacement with test c6r1
         # array[array.index(4)] = "Z"
       @board[@board.index(selection)] = p.character
@@ -110,8 +115,11 @@ class Game
       elsif (@board.include?(selection)) && (@board.include?(spot_beneath_selection))
       puts "GRAVITY ERROR: The spot below (#{spot_beneath_selection}) is empty."
       else
+  
       # else the loop repeats til a valid character is entered
       puts "Invalid position."
+      break
+ 
       end
       #^ cond end
       end
