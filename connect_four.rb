@@ -98,7 +98,8 @@ class Game
       puts "Player #{p.name} (#{p.character}), pick a position on the board (Use 'C_R_' format)."
       # grab selection then automatically upcase any letters!
       selection = gets.chomp.upcase
-      puts selection
+      # line below verifies the player's input gets upcased.
+      # puts selection
       # if C1R4 then grabs 3 as a string form:
       row_beneath_selection = (selection[-1].to_i - 1).to_s
       # create new variable that stores the spot immediately beneath the selection!
@@ -123,11 +124,11 @@ class Game
       print_array()
       break
       # if the spot below is empty, notify user and have them repick. I'm a nice person and won't allow it to drop in.
-      elsif (@board.include?(spot_beneath_selection))
-      puts "ERROR: The spot below (#{spot_beneath_selection}) is empty. Did you mean to select this spot instead?"
+      elsif (@board.include?(selection)) && (@board.include?(spot_beneath_selection))
+      puts "GRAVITY ERROR: The spot below (#{spot_beneath_selection}) is empty."
       else
       # else the loop repeats til a valid character is entered
-      puts "Please pick a valid position on the board (Use 'C_R_' format)."
+      puts "Invalid position."
       end
       #^ cond end
       end
@@ -155,7 +156,8 @@ class Game
             # iteration if match not found but board full, so this cats must be defined based on conditions outside the each do loop! COOL!
             # if cats aka no game end and the board is full, break loop but dont 
             #as long as R6 exists anywhere (aka top row is not completely full yet), KEEP GOING! This next line checks the top board row for any empty R6's
-            elsif @gameover == false && !@board.any?(1..9)
+            # if gameover toggle is false AND if the board does NOT(!) have any spots on the top shelf that haven't been filled (aka one or more C_R6) spots are open, keep going.
+            elsif @gameover == false && !@board[0..6].any?(/.*R6/)
             puts "CATS! end game."
             @gameover = true
             break
