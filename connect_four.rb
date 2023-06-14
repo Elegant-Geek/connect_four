@@ -114,18 +114,18 @@ class Game
       end
       # ^ loop small end
             # match combo array to any winning combo using iteration through every winning combo
+            # puts "player combo ignore#{p.combo_array}"
             WINNERS.each do |n|
               # the "and" sign catches the intersecting values of each instance of the winning combos constant and matches it to the current player's combo array.
               @intersection = n & p.combo_array
-              if (@intersection.size > 2)
-                puts "PRINT AUGH#{p.combo_array}"
-                puts "PRINT AUGH#{@intersection}"
-              end
+              # if (@intersection.size >= 3)
+              #   puts "Getting close... #{@intersection}"
+              # end
               # if any winner at all, then report winner and break game. It doesn't matter if board is full or not. The board is checked for fullness later on.
               # puts "printing intersection #{@intersection}"
               # puts "printing n #{n}"
               # .... the answer was right in front of me. screw matching, as soon as the intersection is size of four, that is a win.
-              if (@intersection.size == 4)
+              if (@intersection.size == 4) # << no sorting needed with this strategy!
                 puts "PLAYER #{p.name} (#{p.character}), WINS THE GAME WITH POSITIONS #{@intersection}!"
                 @gameover = true
                 break

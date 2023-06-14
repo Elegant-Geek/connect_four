@@ -4,9 +4,9 @@ WINNERS = []
 1.upto(6) do |n|
   n = n.to_s
   across_winners = [["C1R_", "C2R_", "C3R_", "C4R_"],
-                    ["C2R_", "C3R_", "C4R_",  "C5R_"],
-                    ["C3R_", "C4R_",  "C5R_", "C6R_"],
-                    ["C4R_",  "C5R_", "C6R_", "C7R_"]]
+                    ["C2R_", "C3R_", "C4R_", "C5R_"],
+                    ["C3R_", "C4R_", "C5R_", "C6R_"],
+                    ["C4R_", "C5R_", "C6R_", "C7R_"]]
   across_winners.each do |w|
     w.each do |inside|
       inside.gsub!("_", n)
@@ -20,9 +20,10 @@ end
 #generates all down winners
 1.upto(7) do |n|
   n = n.to_s
+  # THERE WAS A TYPO IN DOWN WINNERS
   down_winners = [["C_R6", "C_R5", "C_R4", "C_R3"],
-                  ["C_R5", "C_R4", "CR_3", "C_R2"],
-                  ["C_R4", "CR_3", "C_R2", "C_R1"]]
+                  ["C_R5", "C_R4", "C_R3", "C_R2"],
+                  ["C_R4", "C_R3", "C_R2", "C_R1"]]
   down_winners.each do |w|
     w.each do |inside|
       inside.gsub!("_", n)
