@@ -1,11 +1,4 @@
-# coding started at 11:31PM
-# finished set up of set_player names 12:15AM
-# finished storing names as players with default characters. 12:58AM
-# refined conditionalls for nil / blank names
-# first github / git commmit at 1:55AM
-# finish rough draft (still buggy with what counts as a win) as of 4:51AM OOPS
-# 11:15-3:15 (4 hours) cleaned up cmd line output, improved conditional statement logic, and wrote the code to match / catch the winning amounts to the player combo array!
-
+# 8:48pm on 6.13.23 is start of this project connect four
 class Game
   attr_reader :board, :players
   # create a list of winning combos in the array
@@ -19,7 +12,7 @@ class Game
     [3, 5, 7],
     [1, 5, 9]
   ]
-  def initialize(game_name = "Tic-Tac-Toe")
+  def initialize(game_name = "Connect Four")
     @players = []
     reset()
     puts "New game called '#{game_name}' created."
@@ -57,10 +50,10 @@ class Game
             puts "Thanks! Your name is saved as '#{name}'."
             # after names set up, save them
             #create new player
-            # on first iteration, assign first player to X by default.
+            # on first iteration, assign first player to black (white in cmd) by default.
             if i == 0
             @players << Player.new("#{name}", " \u25CF  ")
-            # on second iteration, assign first player to X by default.
+            # on second iteration, assign first player to white (black in cmd) by default.
             elsif i == 1
             @players << Player.new("#{name}", " \u25CB  ")
             else 
@@ -116,6 +109,7 @@ class Game
       p.combo_array << selection
       # sort the combo array, delete duplicate entries, then overwrite it!
       p.combo_array = p.combo_array.sort.uniq
+      puts p.combo_array
       # p p.combo_array
       # this line (below) must be here so that the board display gets updated every time the board changes. The map to_s includes quotes so board maintains shape throughout the game.
       # @board_display = @board.map(&:to_s)
