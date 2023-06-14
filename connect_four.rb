@@ -39,12 +39,12 @@ class Game
         end
   end
   def print_array()
-    p @board[0..6]
-    p @board[7..13]
-    p @board[14..20]
-    p @board[21..27]
-    p @board[28..34]
-    p @board[35..41]
+    p @board[0..6].join(', ')
+    p @board[7..13].join(', ')
+    p @board[14..20].join(', ')
+    p @board[21..27].join(', ')
+    p @board[28..34].join(', ')
+    p @board[35..41].join(', ')
   end
 
   def set_player_names
@@ -61,10 +61,10 @@ class Game
             #create new player
             # on first iteration, assign first player to X by default.
             if i == 0
-            @players << Player.new("#{name}", "X")
+            @players << Player.new("#{name}", " \u25CF  ")
             # on second iteration, assign first player to X by default.
             elsif i == 1
-            @players << Player.new("#{name}", "O")
+            @players << Player.new("#{name}", " \u25CB  ")
             else 
               puts "something is wrong"
             end
