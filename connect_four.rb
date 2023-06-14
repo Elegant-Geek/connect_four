@@ -75,6 +75,24 @@ class Game
           p @players
         end
   end
+  def report(selection)
+    # line below verifies the player's input gets upcased.
+      # puts selection
+      # if C1R4 then grabs 3 as a string form:
+      row_beneath_selection = (selection[-1].to_i - 1).to_s
+      # create new variable that stores the spot immediately beneath the selection! (C1R4's below neighbor is "C1R3" so C1R3 is generated)
+      spot_beneath_selection = selection[0..2] + (row_beneath_selection)
+      # add the user's selection to x or o combo array (each player has their own combo array.)
+      if (@board.include?(selection)) && !(@board.include?(spot_beneath_selection))
+        "valid"
+      elsif (@board.include?(selection)) && (@board.include?(spot_beneath_selection))
+        "gravity"
+      else
+        "invalid"
+      end
+      # return this for use
+  end
+
   def game_turn
     while @gameover == false do
     # puts "Starting new round:"
@@ -84,13 +102,8 @@ class Game
       puts "Player #{p.name} (#{p.character}), pick a position on the board (Use 'C_R_' format)."
       # grab selection then automatically upcase any letters!
       selection = gets.chomp.upcase
-      # line below verifies the player's input gets upcased.
-      # puts selection
-      # if C1R4 then grabs 3 as a string form:
-      row_beneath_selection = (selection[-1].to_i - 1).to_s
-      # create new variable that stores the spot immediately beneath the selection!
-      spot_beneath_selection = selection[0..2] + (row_beneath_selection)
-      # add the user's selection to x or o combo array (each player has their own combo array.)
+      # runs report (you can comment out 104)
+      report = report(selection)
       p.combo_array
       # If board includes C1R4 for instance as a character in the array, it is replaced with players character x or o for time being. otherwise, error
       # next step is to add if player x or o already exists say spot taken
@@ -98,10 +111,10 @@ class Game
       # if the board includes the C1R4 description and the spot below is already filled (ie, excludes C1R3) then it is a valid entry!
       # this takes care of all of row one as well because if spot is C1R1, the array will never have C1R0 which will always return false.
       if selection == "QUIT"
-        puts "bye"
+        puts "goodbye"
         @gameover = true
         break
-    elsif (@board.include?(selection)) && !(@board.include?(spot_beneath_selection))
+      elsif (report == "valid")
         # NEXT STEP IS BELOW: line 117 add the replacement with test c6r1
         # array[array.index(4)] = "Z"
       @board[@board.index(selection)] = p.character
@@ -112,14 +125,14 @@ class Game
       print_array()
       break
       # if the spot below is empty, notify user and have them repick. I'm a nice person and won't allow it to drop in.
-      elsif (@board.include?(selection)) && (@board.include?(spot_beneath_selection))
-      puts "GRAVITY ERROR: The spot below (#{spot_beneath_selection}) is empty."
-      else
-  
+      elsif (report == "gravity")
+      puts "GRAVITY ERROR: The spot below is empty."
+      elsif (report == "invalid") 
       # else the loop repeats til a valid character is entered
       puts "Invalid position."
-      break
- 
+      else
+        puts "Something is wrong..."
+        break
       end
       #^ cond end
       end
