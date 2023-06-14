@@ -39,12 +39,15 @@ class Game
         end
   end
   def print_array()
-    p @board[0..6].join(', ')
-    p @board[7..13].join(', ')
-    p @board[14..20].join(', ')
-    p @board[21..27].join(', ')
-    p @board[28..34].join(', ')
-    p @board[35..41].join(', ')
+    # p @board[0..6].join(', ')
+    # p @board[7..13].join(', ')
+    # p @board[14..20].join(', ')
+    # p @board[21..27].join(', ')
+    # p @board[28..34].join(', ')
+    # p @board[35..41].join(', ')
+    (6).times do |n|
+      p @board[(7 * n)..(7 * n + 6)].join(', ')
+    end
   end
 
   def set_player_names
