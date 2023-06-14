@@ -38,7 +38,7 @@ class Game
           p.combo_array = []
         end
   end
-  def print_default_array()
+  def print_array()
     p @board[0..6]
     p @board[7..13]
     p @board[14..20]
@@ -46,10 +46,7 @@ class Game
     p @board[28..34]
     p @board[35..41]
   end
-  def answer_translate()
-    puts "ppoop"
 
-  end
   def set_player_names
     2.times do |i|
       loop do
@@ -98,38 +95,39 @@ class Game
     @players.each do |p|
     loop do
       # puts "#{p.name} playing as #{p.character}!"
-      puts "Player #{p.name} (#{p.character}), pick a position on the board (1-9)."
-      # the 0-8 below grabs the first 8 characters of the input so that any big numbers wont be registered! COOL!
-      selection = gets.chomp
-      # puts selection
+      puts "Player #{p.name} (#{p.character}), pick a position on the board (Use 'C_R_' format)."
+      # grab selection then automatically upcase any letters!
+      selection = gets.chomp.upcase
+      puts selection
+      # if C1R4 then grabs 3 as a string form:
+      row_beneath_selection = (selection[-1].to_i - 1).to_s
+      # create new variable that stores the spot immediately beneath the selection!
+      spot_beneath_selection = selection[0..2] + (row_beneath_selection)
       # add the user's selection to x or o combo array (each player has their own combo array.)
       p.combo_array
       # If board includes C1R4 for instance as a character in the array, it is replaced with players character x or o for time being. otherwise, error
       # next step is to add if player x or o already exists say spot taken
       # next next step is to prohibit hovering chips and must have sunken chip below like C1R4 cant be filled til C1R3 is filled. so if C1R4 is called but C1R(4-1) spot exists in array, ERROR for hovering chip 
-      if (@board.includes(selection)) && (@board[selection - 1].is_a? Numeric)
-        #add translator here
-      @board[selection - 1] = p.character
+      # if the board includes the C1R4 description and the spot below is already filled (ie, excludes C1R3) then it is a valid entry!
+      # this takes care of all of row one as well because if spot is C1R1, the array will never have C1R0 which will always return false.
+      if (@board.include?(selection)) && !(@board.include?(spot_beneath_selection))
+        # NEXT STEP IS BELOW: line 117 add the replacement with test c6r1
+        # array[array.index(4)] = "Z"
+      @board[@board.index(selection)] = p.character
       p.combo_array << selection
       # sort the combo array, delete duplicate entries, then overwrite it!
       p.combo_array = p.combo_array.sort.uniq
       # p p.combo_array
       # this line (below) must be here so that the board display gets updated every time the board changes. The map to_s includes quotes so board maintains shape throughout the game.
-      @board_display = @board.map(&:to_s)
-      p @board_display[0..2]
-      p @board_display[3..5]
-      p @board_display[6..8]
+      # @board_display = @board.map(&:to_s)
+      print_array()
       break
-      elsif !(selection.is_a? Numeric)
-        puts "Type a number 1-9..." 
-      # If spot taken by x or o aka a non-numerical datatype, print this message.
-      elsif (selection <= 9) && (!@board[selection - 1].is_a? Numeric)
-      puts "Spot already taken."
-      elsif !@board[selection - 1].nil? || selection > 9
-      puts "TYPE 1-9 YOU MANIAC."
+      # if the spot below is empty, notify user and have them repick. I'm a nice person and won't allow it to drop in.
+      elsif (@board.include?(spot_beneath_selection))
+      puts "ERROR: The spot below (#{spot_beneath_selection}) is empty. Did you mean to select this spot instead?"
       else
       # else the loop repeats til a valid character is entered
-      "Type a number 1-9." 
+      puts "Please pick a valid position on the board (Use 'C_R_' format)."
       end
       #^ cond end
       end
@@ -156,6 +154,7 @@ class Game
             # cats must be checked outside of the main loop using gameover variable set to true condition because otherwise, cats will be returned on first
             # iteration if match not found but board full, so this cats must be defined based on conditions outside the each do loop! COOL!
             # if cats aka no game end and the board is full, break loop but dont 
+            #as long as R6 exists anywhere (aka top row is not completely full yet), KEEP GOING! This next line checks the top board row for any empty R6's
             elsif @gameover == false && !@board.any?(1..9)
             puts "CATS! end game."
             @gameover = true
@@ -176,7 +175,7 @@ class Game
     answer = gets.to_s.upcase.chomp
     if ((answer == "Y" || answer == "YES"))
     reset()
-    print_default_array()
+    print_array()
     game_turn()
     else      
       puts "Thanks for playing!"
@@ -186,7 +185,7 @@ class Game
   def play_game()
     puts "Welcome to Tic-Tac-Toe!"
     set_player_names()
-    print_default_array()
+    print_array()
     game_turn()
   end
 end
