@@ -40,6 +40,14 @@ describe Game do
     it "second player should be 'Two'" do    
       expect(test_game.players[1].name).to be == "Two"
     end
+
+    it "First player unicode is" do    
+      expect(test_game.players[0].character).to be == " \u25CF  "
+    end
+
+    it "Second player unicode is" do    
+      expect(test_game.players[1].character).to be == " \u25CB  "
+    end
   end
 
 end
