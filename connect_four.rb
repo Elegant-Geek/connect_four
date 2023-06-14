@@ -48,7 +48,7 @@ class Game
             # on first iteration, assign first player to black (white in cmd) by default.
             if i == 0
             @players << Player.new("#{name}", " \u25CF  ")
-            # on second iteration, assign first player to white (black in cmd) by default.
+            # on second iteration, assign second player to white (black in cmd) by default.
             elsif i == 1
             @players << Player.new("#{name}", " \u25CB  ")
             else 

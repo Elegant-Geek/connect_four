@@ -14,9 +14,11 @@ describe Game do
     # whatever is in my loop must be wrapped in a function so i can immediately print the output (my test is set up to kill overarching function oops)
   end
 
-  # describe 'WINNERS constant' do
-  #   expect(WINNERS.size).to eq(183)
-  # end
+  describe 'WINNERS constant' do
+    it "first player should be 'One'" do    
+      expect(WINNERS.size).to eq(183)
+    end
+  end
 
     describe 'store players' do
       it "first player should be 'One'" do    
@@ -38,16 +40,24 @@ describe Game do
 
   describe 'play rounds' do
     context 'select valid grid square' do    
-      it "should return as invalid because it is not a grid coordinate on the board'" do
-        # this is player one's move again 
+      it "should return as valid because it is a grid coordinate on the board'" do
         allow(subject).to receive(:gets).and_return('C1R1')
         expect(subject.report('C1R1')).to eq("valid")
+      end
+
+      it "should return as valid because it is a grid coordinate on the board'" do
+        allow(subject).to receive(:gets).and_return('C3R1')
+        expect(subject.report('C3R1')).to eq("valid")
+      end
+
+      it "should return as valid because it is a grid coordinate on the board'" do
+        allow(subject).to receive(:gets).and_return('C5R1')
+        expect(subject.report('C5R1')).to eq("valid")
       end
     end
 
     context 'select invalid grid square' do    
       it "should return as invalid because it is not a grid coordinate on the board'" do
-        allow(subject).to receive(:gets).and_return('C8R8')
         expect(subject.report('C8R8')).to eq("invalid")
       end
 
@@ -56,19 +66,16 @@ describe Game do
         subject.board[35] = " \u25CF  "
         puts "If a C1R1 is declared again on the grid below, 'invalid' is returned..."
         subject.print_array()
-        allow(subject).to receive(:gets).and_return('C1R1')
         expect(subject.report('C1R1')).to eq("invalid")
       end
     end
 
     context 'select grid that is antigravity and off board' do    
       it "should not return as antigravity, but as an off board example instead" do    
-        allow(subject).to receive(:gets).and_return('C8R8')
         expect(subject.report('C8R8')).to eq("invalid")
       end
 
       it 'should return as antigravity because it is validly on board but hovering' do    
-        allow(subject).to receive(:gets).and_return('C1R2')
         expect(subject.report('C1R2')).to eq("gravity")      
       end
     end
@@ -79,11 +86,22 @@ describe Game do
 end
 
 # goal is to get printed output only once...
+# -----------------------------COMPLETED TESTS--------------------------------
+# player names one and two name storage 2x
+# unicode support / correct setup 2x
+# on first iteration, assign first player to black (white in cmd) by default.
 # on second iteration, assign first player to white (black in cmd) by default.
+# tested three valid squares on first row
+# test invalid off grid spot
+# test invalid bc spot taken
+# an antigravity and off board returns the offboard message before/instead of antigravity
+# only returns antigravity when a valid spot on the board but still hovering
+# (id love to get two or more chips on the board then test antigravity like that...)
+# test the row beneath selection calculation 
 
-# tested invalid move
-# tested top gravity thing 
 
+# -----------------------------TODO TESTS--------------------------------
+# winner size should always be WINNERS.size == 183
 # test inputs that show up as intersects like winners[1] will show one intersect
 # test inputs that show up as intersects like winners[2] will show two intersect etc
 # test two across wins (sorted and unsorted)
@@ -91,8 +109,6 @@ end
 # test two diag wins (sorted and unsorted)
 # test if player one win comes before player two win, report player one as winner
 # test if player two win comes before player one win, report player two as winner
-# winner size should always be WINNERS.size == 183
-# test row beneath selection 
 # test that after reset, each players combo_array is [] again, @gameover == false and that board is... [big array again]
 
 # test a game with values of (start C1R1...C7R6) consecutively gives cats 
