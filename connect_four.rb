@@ -1,6 +1,6 @@
 # 8:48pm on 6.13.23 is start of this project connect four
 # ended main code at 4:04am, so now all I gotta do is write the tests for it! Yay!
-# require 'stringio'
+# Started testing at 2:30pm - 9:45pm 6.14.23 (Connect four all done in 2 long days)
 
 require_relative './test_big_arrays.rb'
 class Game
@@ -44,7 +44,7 @@ class Game
           if (confirm_name == "Y" && (name != '' && name != nil))
             puts "Thanks! Your name is saved as '#{name}'."
             # after names set up, save them
-            #create new player
+            # create new player
             # on first iteration, assign first player to black (white in cmd) by default.
             if i == 0
             @players << Player.new("#{name}", " \u25CF  ")
@@ -76,8 +76,10 @@ class Game
         end
   end
   def top_row_empty?()
+    # as long as R6 exists anywhere (aka top row is not completely full yet), KEEP GOING! This next line checks the top board row for any empty R6's
     @board[0..6].any?(/.*R6/)
   end
+ # .... the answer was right in front of me. screw matching, as soon as the intersection is size of four, that is a win.
   def win?()
     @intersection.size == 4
   end
@@ -126,8 +128,7 @@ class Game
       @board[@board.index(selection)] = p.character
       p.combo_array << selection
       p p.combo_array
-      # this line (below) must be here so that the board display gets updated every time the board changes. The map to_s includes quotes so board maintains shape throughout the game.
-      # @board_display = @board.map(&:to_s)
+      # this line (below) must be here so that the board display gets updated every time the board changes.
       print_array()
       break
       # if the spot below is empty, notify user and have them repick. I'm a nice person and won't allow it to drop in.
@@ -148,13 +149,7 @@ class Game
             WINNERS.each do |n|
               # the "and" sign catches the intersecting values of each instance of the winning combos constant and matches it to the current player's combo array.
               @intersection = n & p.combo_array
-              # if (@intersection.size >= 3)
-              #   puts "Getting close... #{@intersection}"
-              # end
-              # if any winner at all, then report winner and break game. It doesn't matter if board is full or not. The board is checked for fullness later on.
-              # puts "printing intersection #{@intersection}"
-              # puts "printing n #{n}"
-              # .... the answer was right in front of me. screw matching, as soon as the intersection is size of four, that is a win.
+              
               if (win?()) # << no sorting needed with this strategy!
                 puts "PLAYER #{p.name} (#{p.character}), WINS THE GAME WITH POSITIONS #{@intersection}!"
                 @gameover = true
@@ -166,11 +161,9 @@ class Game
             # now exit out of main loop if game over is true (because it is currently nested in the each do loop above but not outside of it.)
             if @gameover == true
             break
-            # now cats can be declared if board is full but the loop never broke and declared a winner as shown above!
+            # now cats can be declared if board is full but the loop never broke and declared a winner as shown above (in rspec)!
             # cats must be checked outside of the main loop using gameover variable set to true condition because otherwise, cats will be returned on first
             # iteration if match not found but board full, so this cats must be defined based on conditions outside the each do loop! COOL!
-            # if cats aka no game end and the board is full, break loop but dont 
-            #as long as R6 exists anywhere (aka top row is not completely full yet), KEEP GOING! This next line checks the top board row for any empty R6's
             # if gameover toggle is false AND if the board does NOT(!) have any spots on the top shelf that haven't been filled (aka one or more C_R6) spots are open, keep going.
             elsif @gameover == false && !top_row_empty?()
             puts "CATS! end game."
@@ -216,10 +209,9 @@ class Player
     @name = name
     @character = character
     @combo_array = []
-    #append player details to the main array of players. Each player is their own array. Maybe change this to be a hash...
+    #append player details to the main array of players. Each player is their own array. 
   end
 end
-
 
 # have this run only if instructed to within this file otherwise when you run rspec, it searches the whole rspec doc for input.
 if __FILE__== $0

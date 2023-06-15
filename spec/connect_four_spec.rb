@@ -1,7 +1,6 @@
 require_relative '../connect_four.rb'
 require_relative '../test_big_arrays.rb'
 
-
 describe Game do
   subject(:test_game) { Game.new() }
 
@@ -20,22 +19,22 @@ describe Game do
     end
   end
 
-    describe 'store players' do
-      it "first player should be 'One'" do    
-        expect(test_game.players[0].name).to be == "One"
-      end
+  describe 'store players' do
+    it "first player should be 'One'" do    
+      expect(test_game.players[0].name).to be == "One"
+    end
 
-      it "second player should be 'Two'" do    
-        expect(test_game.players[1].name).to be == "Two"
-      end
+    it "second player should be 'Two'" do    
+      expect(test_game.players[1].name).to be == "Two"
+    end
 
-      it "First player unicode is" do    
-        expect(test_game.players[0].character).to be == " \u25CF  "
-      end
+    it "First player unicode is" do    
+      expect(test_game.players[0].character).to be == " \u25CF  "
+    end
 
-      it "Second player unicode is" do    
-        expect(test_game.players[1].character).to be == " \u25CB  "
-      end
+    it "Second player unicode is" do    
+      expect(test_game.players[1].character).to be == " \u25CB  "
+    end
   end
 
   describe 'play rounds' do
@@ -79,7 +78,6 @@ describe Game do
   end
 
   context 'a cats game' do
-
     # EMPTY TOP
     it 'should not be a full board on top row (some empty on top row)' do   
       allow(subject).to receive(:gets).and_return("C1R1", "C1R2", "QUIT", "N")  
@@ -154,14 +152,13 @@ end
 # test a diag win
 # test an empty top
 # test full top
-# -----------------------------TODO TESTS--------------------------------
-
-
 # make sure a cats game works: test a game with values of (start C1R1...C7R6) consecutively gives cats 
+# test if player one win comes before player two win, report player one as winner (taken care of in across test)
+# test if player two win comes before player one win, report player two as winner (taken care of with cats win test)
+
+# -----------------------------TODO TESTS--------------------------------
 # test that after reset, each players combo_array is [] again, @gameover == false and that board is... [big array again]
 
-# test if player one win comes before player two win, report player one as winner
-# test if player two win comes before player one win, report player two as winner
 
 
 
