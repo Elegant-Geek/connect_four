@@ -1,0 +1,20 @@
+CATS WITH A WIN
+["C1R1", "C2R1", "C1R2", "C3R1", "C4R1","C5R1", "C1R3","C1R4", "C2R2", "C3R2", "C1R5", "C7R1", "C6R1", "C4R2", "C5R2", "C6R2", "C7R2", "C1R6", 
+"C4R3", "C6R3", "C3R3","C3R4", "C7R3", "C4R4", "C5R3", "C2R3", "C2R4", "C5R4", "C6R4", "C7R4", "C2R5", "C3R5", "C4R5", "C5R5", "C7R5", "C5R6", 
+"C6R5", "C6R6", "C2R6", "C4R6", "C3R6", "C7R6"]
+
+CATS WITH A WIN MOVE SEPARATED ARRAYS:
+from p1
+["C1R1", "C1R2", "C4R1", "C1R3", "C2R2", "C1R5", "C6R1", "C5R2", "C7R2", "C4R3", "C3R3", "C7R3", "C5R3", "C2R4", "C6R4", "C2R5", "C4R5", "C7R5", "C6R5", "C2R6", "C3R6"]
+
+from p2
+["C2R1", "C3R1", "C5R1", "C1R4", "C3R2", "C7R1", "C4R2", "C6R2", "C1R6", "C6R3", "C3R4", "C4R4", "C2R3", "C5R4", "C7R4", "C3R5", "C5R5", "C5R6", "C6R6", "C4R6", "C7R6"]
+
+CATS WITHOUT A WIN
+["C1R1", "C2R1", "C1R2", "C3R1", "C4R1","C5R1", "C1R3","C1R4", "C2R2", "C3R2", "C1R5", "C7R1", "C6R1", "C4R2", "C5R2", "C6R2", "C7R2", "C1R6", 
+"C4R3", "C6R3", "C3R3","C3R4", "C7R3", "C4R4", "C5R3", "C2R3", "C2R4", "C5R4", "C6R4", "C7R4", "C2R5", "C3R5", "C4R5", "C5R5", "C7R5", "C5R6", 
+"C6R5", "C6R6", "C4R6", "C2R6", "C3R6", "C7R6"]
+
+
+The only difference beween the win on the last move cats and TRUE CATS is swapping c4r6 with c2r6
+and swapping c2r6 with c4r6.

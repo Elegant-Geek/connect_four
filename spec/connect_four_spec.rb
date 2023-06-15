@@ -78,29 +78,62 @@ describe Game do
     end
   end
 
-  describe 'a cats game' do
+  context 'a cats game' do
 
     # EMPTY TOP
-    it 'should not be a full board on top row (some empty on top row)' do  
-      allow(subject).to receive(:gets).and_return("C1R1", "C2R1", "C3R1", "C4R1", "C5R1", "C6R1", "C7R1",
-        "C1R2", "C2R2", "C3R2", "C4R2", "C5R2", "C6R2", "C7R2",
-        "C1R3", "C2R3", "C3R3", "C4R3", "C5R3", "C6R3", "C7R3", 
-        "C1R4", "C2R4", "C3R4", "C4R4", "C5R4", "C6R4", "C7R4", 
-        "C1R5", "C2R5", "C3R5", "C4R5", "C5R5", "C6R5", "C7R5",
-        "C1R6", "C2R6", "C3R6", "C4R6", "C5R6", "C6R6", "C7R6", 
-        'QUIT', 'N')  
-      subject.game_turn()
+    it 'should not be a full board on top row (some empty on top row)' do   
+      allow(subject).to receive(:gets).and_return("C1R1", "C1R2", "QUIT", "N")  
       expect(subject.top_row_empty?()).to be true  
-
     end
-    #CATS
-    xit 'should definitely be a full board on top row (NONE empty on top row)' do
-      allow(subject).to receive(:gets).and_return    
+
+    #TRUE CATS FULL TOP NO WIN ("C7R6", "C3R6")
+    it 'should be a full board on top row (NONE empty on top row)' do
+      allow(subject).to receive(:gets).and_return("C1R1", "C2R1", "C1R2", "C3R1", "C4R1","C5R1", "C1R3","C1R4", "C2R2", "C3R2", "C1R5", "C7R1", "C6R1", "C4R2", "C5R2", "C6R2", "C7R2", "C1R6", 
+        "C4R3", "C6R3", "C3R3","C3R4", "C7R3", "C4R4", "C5R3", "C2R3", "C2R4", "C5R4", "C6R4", "C7R4", "C2R5", "C3R5", "C4R5", "C5R5", "C7R5", "C5R6", 
+        "C6R5", "C6R6", "C4R6", "C2R6", "C3R6", "C7R6", "QUIT", "N")
+      subject.game_turn()
       expect(subject.top_row_empty?()).to be false  
+    end
+
+    #TRUE CATS GAME OUTPUT TEST: WINNER ON LAST MOVE ("C3R6", "C7R6"). LAST MOVE THAT ENDS UP WINNING TAKES PRIORITY OVER CATS OUTPUT (win = true)
+    it 'should declare winner on last move of an otherwise cats game' do
+      allow(subject).to receive(:gets).and_return("C1R1", "C2R1", "C1R2", "C3R1", "C4R1","C5R1", "C1R3","C1R4", "C2R2", "C3R2", "C1R5", "C7R1", "C6R1", "C4R2", "C5R2", "C6R2", "C7R2", "C1R6", 
+        "C4R3", "C6R3", "C3R3","C3R4", "C7R3", "C4R4", "C5R3", "C2R3", "C2R4", "C5R4", "C6R4", "C7R4", "C2R5", "C3R5", "C4R5", "C5R5", "C7R5", "C5R6", 
+        "C6R5", "C6R6", "C2R6", "C4R6", "C3R6", "C7R6", "QUIT", "N")  
+      subject.game_turn()
+      expect(subject.win?()).to be true   
+    end
+
+    #TRUE CATS GAME OUTPUT TEST: NO WINNER (win = false)
+    it 'declare no winner on true cats game' do
+      allow(subject).to receive(:gets).and_return("C1R1", "C2R1", "C1R2", "C3R1", "C4R1","C5R1", "C1R3","C1R4", "C2R2", "C3R2", "C1R5", "C7R1", "C6R1", "C4R2", "C5R2", "C6R2", "C7R2", "C1R6", 
+        "C4R3", "C6R3", "C3R3","C3R4", "C7R3", "C4R4", "C5R3", "C2R3", "C2R4", "C5R4", "C6R4", "C7R4", "C2R5", "C3R5", "C4R5", "C5R5", "C7R5", "C5R6", 
+        "C6R5", "C6R6", "C4R6", "C2R6", "C3R6", "C7R6", "QUIT", "N")
+      subject.game_turn()
+      expect(subject.win?()).to be false   
     end
   end
 
-
+  context 'a winning game' do
+    # ACROSS WIN (note that QUIT and N are only really needed when loop doesnt break aka no game over trigger/win. I kept em in anyway.)
+    it 'should let player 1 win across bottom row' do  
+      allow(subject).to receive(:gets).and_return("C1R1", "C1R2", "C2R1", "C1R3", "C3R1", "C2R2", "C4R1", "QUIT", "N")  
+      subject.game_turn()
+      expect(subject.win?()).to be true  
+    end
+    # UPDOWN WIN
+    it 'should let player 1 win up/down column 1' do
+      allow(subject).to receive(:gets).and_return("C1R1", "C1R2", "C2R1", "C1R3", "C3R1", "C2R2", "C3R2", "C1R4", "C2R3", "C1R5", "QUIT", "N")  
+      subject.game_turn()
+      expect(subject.win?()).to be true  
+    end
+    # DIAGONAL WIN 
+    it 'should let player 1 win up/down column 1' do
+      allow(subject).to receive(:gets).and_return("C1R1", "C2R1", "C2R2", "C3R1", "C4R1", "C3R2", "C3R3", "C4R2", "C5R1", "C4R3", "C4R4", "QUIT", "N")  
+      subject.game_turn()
+      expect(subject.win?()).to be true  
+    end
+  end
 end
 
 # goal is to get printed output only once...
@@ -116,17 +149,17 @@ end
 # only returns antigravity when a valid spot on the board but still hovering
 # (id love to get two or more chips on the board then test antigravity like that...)
 # winner size should always be WINNERS.size == 183
-
+# test a across win
+# test a down win
+# test a diag win
+# test an empty top
+# test full top
 # -----------------------------TODO TESTS--------------------------------
 
 
 # make sure a cats game works: test a game with values of (start C1R1...C7R6) consecutively gives cats 
 # test that after reset, each players combo_array is [] again, @gameover == false and that board is... [big array again]
 
-
-# test two across wins (sorted and unsorted)
-# test two down wins (sorted and unsorted)
-# test two diag wins (sorted and unsorted)
 # test if player one win comes before player two win, report player one as winner
 # test if player two win comes before player one win, report player two as winner
 

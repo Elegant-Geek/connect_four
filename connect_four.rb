@@ -78,6 +78,9 @@ class Game
   def top_row_empty?()
     @board[0..6].any?(/.*R6/)
   end
+  def win?()
+    @intersection.size == 4
+  end
   def report(selection)
     # line below verifies the player's input gets upcased.
       # puts selection
@@ -152,7 +155,7 @@ class Game
               # puts "printing intersection #{@intersection}"
               # puts "printing n #{n}"
               # .... the answer was right in front of me. screw matching, as soon as the intersection is size of four, that is a win.
-              if (@intersection.size == 4) # << no sorting needed with this strategy!
+              if (win?()) # << no sorting needed with this strategy!
                 puts "PLAYER #{p.name} (#{p.character}), WINS THE GAME WITH POSITIONS #{@intersection}!"
                 @gameover = true
                 break
