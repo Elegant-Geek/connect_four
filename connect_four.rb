@@ -75,6 +75,9 @@ class Game
           p @players
         end
   end
+  def top_row_empty?()
+    @board[0..6].any?(/.*R6/)
+  end
   def report(selection)
     # line below verifies the player's input gets upcased.
       # puts selection
@@ -166,7 +169,7 @@ class Game
             # if cats aka no game end and the board is full, break loop but dont 
             #as long as R6 exists anywhere (aka top row is not completely full yet), KEEP GOING! This next line checks the top board row for any empty R6's
             # if gameover toggle is false AND if the board does NOT(!) have any spots on the top shelf that haven't been filled (aka one or more C_R6) spots are open, keep going.
-            elsif @gameover == false && !@board[0..6].any?(/.*R6/)
+            elsif @gameover == false && !top_row_empty?()
             puts "CATS! end game."
             @gameover = true
             break
